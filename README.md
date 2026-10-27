@@ -48,9 +48,9 @@ Faz parte do ecossistema de serviços e infraestrutura da pós-graduação em Ar
 
 ### Credenciais, consumidores e migrações
 
-- O [serviço Identity](https://github.com/FIAP-15SOAT/oficina-mecanica-identity-service) descobre a instância RDS pelo identificador fixo `rds-oficina-mecanica-identity` (`RDS_INSTANCE_IDENTIFIER`) e o cache pelo identificador fixo `cache-oficina-mecanica-identity` e pelo secret `cache-oficina-mecanica-identity-auth-token` durante o CD (C-17), materializando os Secrets Kubernetes (`database-credentials` e `cache-credentials`) no namespace `identity` sem ler o state deste repositório.
+- O [serviço Identity](https://github.com/FIAP-15SOAT/oficina-mecanica-identity-service) descobre a instância RDS pelo identificador fixo `rds-oficina-mecanica-identity` (`RDS_INSTANCE_IDENTIFIER`) e o cache pelo identificador fixo `cache-oficina-mecanica-identity` e pelo secret `cache-oficina-mecanica-identity-auth-token` durante o CD, materializando os Secrets Kubernetes (`database-credentials` e `cache-credentials`) no namespace `identity` sem ler o state deste repositório.
 - O job `db-migrate` do **CD do Identity** executa `prisma migrate deploy` dentro do EKS antes de `app-deploy`. Este Terraform provisiona o RDS e o ElastiCache, mas não cria tabelas nem executa migrations.
-- A [Lambda de autenticação de clientes](https://github.com/FIAP-15SOAT/oficina-mecanica-lambda-customer-auth) (a partir da C-20) e os demais microsserviços nunca acessam o banco nem o cache do Identity diretamente; toda integração ocorre via endpoints REST internos (`/internal/users/:id`, `/internal/customer-users`, `/internal/customer-authentications`).
+- A [Lambda de autenticação de clientes](https://github.com/FIAP-15SOAT/oficina-mecanica-lambda-customer-auth) e os demais microsserviços nunca acessam o banco nem o cache do Identity diretamente; toda integração ocorre via endpoints REST internos (`/internal/users/:id`, `/internal/customer-users`, `/internal/customer-authentications`).
 
 ---
 
