@@ -68,7 +68,7 @@ variable "db_max_allocated_storage" {
 variable "db_name" {
   description = "Initial database name"
   type        = string
-  default     = "identity"
+  default     = "identity_service"
 }
 
 variable "db_username" {
